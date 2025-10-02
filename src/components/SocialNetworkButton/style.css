@@ -1,0 +1,11 @@
+.social-btn {
+  border-radius: 8px;
+  color: var(--main-color);
+  font-size: 1.5rem;
+  padding: 4px;
+  transition: all .3s;
+}
+
+.social-btn:hover {
+  transform: translateY(-3px);
+}

@@ -1,0 +1,35 @@
+.main-menu {
+  background-color: var(--main-bg);
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  padding: 12px;
+  width: 100%;
+}
+
+.main-menu a {
+  border-radius: 6px;
+  color: var(--main-txt);
+  text-decoration: none;
+  padding: 8px 16px;
+  transition: background-color 0.2s;
+}
+
+.main-menu a:hover {
+  background-color: var(--light-bg);
+  color: var(--main-bg);
+}
+
+.main-menu a.active {
+  background-color: var(--light-bg);
+  color: var(--main-bg);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.main-menu .title {
+  align-self: center;
+  font-size: 1.6rem;
+  padding: 0 16px;
+  text-align: left;
+}

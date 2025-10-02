@@ -1,0 +1,133 @@
+:root {
+  --card-img-size: 140px;
+  --id-size: 48px;
+  --trump-size: 60px;
+}
+
+.card-container {
+  cursor: pointer;
+  height: 440px;
+  perspective: 1000px;
+  position: relative;
+  width: 280px;
+}
+
+.card {
+  background: linear-gradient(135deg, var(--medium-bg), var(--light-bg));
+  border: 6px solid var(--main-bg);
+  border-radius: var(--default-border-radius);
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s ease;
+}
+
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-front {
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  left: 0;
+  padding: 8px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.card-back {
+  align-items: center;
+  backface-visibility: hidden;
+  background: radial-gradient(circle,
+      var(--main-bg) 0%,
+      var(--medium-bg) 75%,
+      var(--light-bg) 100%);
+  color: var(--main-txt);
+  display: flex;
+  font-size: 1.4rem;
+  font-weight: bold;
+  transform: rotateY(180deg);
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.title-wrappper {
+  align-items: center;
+  background: linear-gradient(45deg, var(--medium-bg), var(--light-bg));
+  border: 1px solid var(--main-bg);
+  border-radius: var(--default-border-radius);
+  color: var(--main-bg);
+  display: flex;
+  font-size: 1.5rem;
+  font-weight: 700;
+  height: 68px;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+.id {
+  align-items: center;
+  background-color: var(--main-bg);
+  border-radius: 50%;
+  color: var(--main-txt);
+  display: flex;
+  height: var(--id-size);
+  justify-content: center;
+  width: var(--id-size);
+}
+
+.card-img {
+  border-radius: var(--default-border-radius);
+  height: var(--card-img-size);
+  margin: 0 auto;
+  width: var(--card-img-size);
+}
+
+.attributes-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.attribute {
+  background-color: var(--main-bg);
+  border-radius: var(--default-border-radius);
+  border: none;
+  color: var(--main-txt);
+  cursor: pointer;
+  padding: 8px;
+  font-size: inherit;
+  font-weight: 600;
+}
+
+.trump {
+  align-items: center;
+  background: linear-gradient(45deg,
+      #d4af37,
+      #ffd700,
+      #fff8dc,
+      #ffd700,
+      #d4af37);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  color: var(--main-bg);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.8rem;
+  font-weight: bold;
+  height: var(--trump-size);
+  justify-content: center;
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  transform: rotate(45deg);
+  width: var(--trump-size);
+}

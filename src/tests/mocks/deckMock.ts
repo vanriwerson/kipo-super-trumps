@@ -1,0 +1,58 @@
+import type { Card } from '../../interfaces';
+
+export const deckMock: Card[] = [
+  {
+    id: '1A',
+    name: 'Card 1',
+    isTrumpCard: false,
+    strength: 5,
+    agility: 4,
+    charisma: 3,
+    intelligence: 2,
+  },
+  {
+    id: '2B',
+    name: 'Card 2',
+    isTrumpCard: false,
+    strength: 6,
+    agility: 5,
+    charisma: 2,
+    intelligence: 4,
+  },
+  {
+    id: '3C',
+    name: 'Card 3',
+    isTrumpCard: false,
+    strength: 3,
+    agility: 2,
+    charisma: 6,
+    intelligence: 5,
+  },
+  {
+    id: '4D',
+    name: 'Card 4',
+    isTrumpCard: true,
+    strength: 10,
+    agility: 9,
+    charisma: 1,
+    intelligence: 7,
+  },
+  {
+    id: '5A',
+    name: 'Card 5',
+    isTrumpCard: false,
+    strength: 4,
+    agility: 3,
+    charisma: 7,
+    intelligence: 6,
+  },
+  {
+    id: '6B',
+    name: 'Card 6',
+    isTrumpCard: false,
+    strength: 3,
+    agility: 7,
+    charisma: 4,
+    intelligence: 3,
+  },
+];
