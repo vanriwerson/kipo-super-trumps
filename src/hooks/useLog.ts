@@ -7,7 +7,10 @@ export function useLog() {
     setLogs((prev) => [log, ...prev]);
   };
 
+  const resetLogs = () => setLogs([]);
+
   return {
+    resetLogs,
     logger,
     logs,
   } as const;

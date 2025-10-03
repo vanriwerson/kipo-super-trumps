@@ -15,7 +15,7 @@ export function useMatch() {
 
   const [lastAITurn, setLastAITurn] = useState<number>(-1);
   const [isAICardRevealed, setIsAICardRevealed] = useState(false);
-  const { logs, logger } = useLog();
+  const { logs, logger, resetLogs } = useLog();
 
   const LOG_DISPLAY_DURATION =
     gameState && gameState.choosingPlayer === 0 ? 1000 : 1500;
@@ -30,6 +30,8 @@ export function useMatch() {
         logger(`${chooser.name} escolhendo atributo`);
       }, LOG_DISPLAY_DURATION);
 
+      setMatchWinner(null); // limpa vencedor anterior
+      resetLogs();
       setGameState(initialState);
       setLastAITurn(-1);
       setIsAICardRevealed(false);
@@ -68,8 +70,11 @@ export function useMatch() {
         else logger('Esse turno empatou!');
       }, delay);
 
-      const winner = checkMatchWinner(gameState);
-      if (winner != null) setMatchWinner(winner.name);
+      const winner = checkMatchWinner(solvedTurn);
+      if (winner != null) {
+        setMatchWinner(winner.name);
+        return; // encerra aqui
+      }
 
       // inicia próximo turno
       setTimeout(() => {
