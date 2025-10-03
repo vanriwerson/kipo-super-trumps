@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useMatch } from '../../hooks';
 import deck from '../../assets/deck';
 import { Card } from '../../components';
@@ -6,20 +5,24 @@ import './style.css';
 import type { CardAttrKey } from '../../interfaces';
 
 export default function Game() {
-  const [aiCardFlipped, setAiCardFlipped] = useState<boolean>(true);
-  const { turn, playerHand, aiHand, start, handleTurn, gameState, logs } =
-    useMatch();
+  const {
+    turn,
+    playerHand,
+    aiHand,
+    start,
+    handleTurn,
+    gameState,
+    logs,
+    isAICardRevealed,
+    matchWinner,
+  } = useMatch();
 
   const handleStartMatch = () => {
-    start(deck);
-    setAiCardFlipped(true); // sempre reseta ao começar uma nova partida
+    start(deck, ['Bruno', 'IA']);
   };
 
   const handleChooseAttr = (attr: CardAttrKey) => {
-    handleTurn(attr, () => {
-      // este callback só é disparado quando o log "escolheu atributo" já foi exibido
-      setAiCardFlipped(false);
-    });
+    handleTurn(attr);
   };
 
   return (
@@ -29,25 +32,39 @@ export default function Game() {
       </button>
 
       {gameState && (
-        <>
-          <div className="in-game-cards">
-            <Card
-              card={playerHand[0]}
-              isInGameMode={true}
-              onChooseAttr={handleChooseAttr}
-            />
-            <Card
-              card={aiHand[0]}
-              flipped={aiCardFlipped}
-              isInGameMode={true}
-            />
-          </div>
+        <div className="in-game-cards">
+          {matchWinner != null ? (
+            <>
+              <div className="winner">
+                <h2>{`${matchWinner} venceu a partida!`}</h2>
+              </div>
+            </>
+          ) : (
+            <>
+              {playerHand[0] && (
+                <Card
+                  card={playerHand[0]}
+                  isInGameMode={true}
+                  onChooseAttr={handleChooseAttr}
+                />
+              )}
+              {aiHand[0] && (
+                <Card
+                  card={aiHand[0]}
+                  flipped={!isAICardRevealed}
+                  isInGameMode={true}
+                />
+              )}
+            </>
+          )}
+        </div>
+      )}
 
-          <div className="game-status">
-            <p className="turn">{turn > 0 ? turn : ''}</p>
-            <p className="log">{logs[0]}</p>
-          </div>
-        </>
+      {matchWinner === null && (
+        <div className="game-status">
+          <p className="turn">{turn > 0 ? turn : ''}</p>
+          <p className="log">{logs[0]}</p>
+        </div>
       )}
     </div>
   );
