@@ -1,66 +1,59 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import type { Card, CardAttrKey, GameState } from '../interfaces';
 import {
   startMatch,
-  chooseAttr,
   AIChooseAttr,
   playTurn,
   getCurrentTurnCards,
+  checkMatchWinner,
 } from '../services';
 import { useLog } from './useLog';
 
 export function useMatch() {
-  const LOG_DISPLAY_DURATION = 1000;
   const [gameState, setGameState] = useState<GameState | null>(null);
+  const [matchWinner, setMatchWinner] = useState<string | null>(null);
+
+  const [lastAITurn, setLastAITurn] = useState<number>(-1);
+  const [isAICardRevealed, setIsAICardRevealed] = useState(false);
   const { logs, logger } = useLog();
 
+  const LOG_DISPLAY_DURATION =
+    gameState && gameState.choosingPlayer === 0 ? 1000 : 1500;
+
   const start = useCallback(
-    (deck: Card[]) => {
-      const initialState = startMatch(deck, ['Bruno', 'AI']);
+    (deck: Card[], players: string[]) => {
+      const initialState = startMatch(deck, players);
       logger('Partida iniciada!');
 
       setTimeout(() => {
         const chooser = initialState.players[initialState.choosingPlayer];
         logger(`${chooser.name} escolhendo atributo`);
       }, LOG_DISPLAY_DURATION);
+
       setGameState(initialState);
+      setLastAITurn(-1);
+      setIsAICardRevealed(false);
     },
-    [logger]
+    [LOG_DISPLAY_DURATION, logger]
   );
 
   const handleTurn = useCallback(
-    async (
-      attr: CardAttrKey,
-      onRevealAICard?: () => void,
-      onNewTurn?: () => void
-    ) => {
+    async (chosen: CardAttrKey) => {
       if (!gameState) return;
 
-      const choosingPlayer = gameState.players[gameState.choosingPlayer];
+      const chooser = gameState.players[gameState.choosingPlayer];
+      logger(`${chooser.name} escolheu ${chosen}`);
 
-      // 1. Escolha do atributo (log imediato)
-      let chosen: CardAttrKey;
-      if (choosingPlayer.name === 'ai') {
-        const aiCard = gameState.players[1].hand[0];
-        chosen = AIChooseAttr(aiCard);
-      } else {
-        chosen = chooseAttr(attr);
-      }
-      logger(`${choosingPlayer.name} escolheu ${chosen}`);
-
-      // 2. Pausa antes de revelar carta da IA
+      setIsAICardRevealed(true);
       await new Promise((resolve) => setTimeout(resolve, LOG_DISPLAY_DURATION));
-      if (onRevealAICard) onRevealAICard();
 
-      // 3. Pega cartas atuais e resolve turno
-      const newState = getCurrentTurnCards(gameState);
-      const solvedTurn = playTurn(newState, chosen);
+      const solvedTurn = playTurn(gameState, chosen);
 
-      // 4. Logs pós-turno
-      const [playerCard, aiCard] = newState.currentTurnCards;
+      // logs
+      const [playerCard, aiCard] = getCurrentTurnCards(gameState);
       let delay = LOG_DISPLAY_DURATION;
 
-      if (playerCard.isTrumpCard || aiCard.isTrumpCard) {
+      if (playerCard?.isTrumpCard || aiCard?.isTrumpCard) {
         setTimeout(() => logger('SuperTrunfo em jogo!'), delay);
         delay += LOG_DISPLAY_DURATION;
       }
@@ -70,29 +63,45 @@ export function useMatch() {
       const winnerIndex = newHands.findIndex((len, i) => len > prevHands[i]);
 
       setTimeout(() => {
-        if (winnerIndex !== -1) {
+        if (winnerIndex !== -1)
           logger(`${solvedTurn.players[winnerIndex].name} venceu esse turno!`);
-        } else {
-          logger('Esse turno empatou!');
-        }
+        else logger('Esse turno empatou!');
       }, delay);
 
-      // 5. Inicia novo turno só depois do log final
+      const winner = checkMatchWinner(gameState);
+      if (winner != null) setMatchWinner(winner.name);
+
+      // inicia próximo turno
       setTimeout(() => {
         const chooser = solvedTurn.players[solvedTurn.choosingPlayer];
         logger(`${chooser.name} escolhendo atributo`);
-        if (onNewTurn) onNewTurn(); // esconde carta da IA
         setGameState(solvedTurn);
+        setIsAICardRevealed(false);
       }, delay + LOG_DISPLAY_DURATION);
 
-      console.log(
-        'Mãos após turno:',
-        solvedTurn.players.map((p) => p.hand.map((c) => c.id))
-      );
       return solvedTurn;
     },
-    [gameState, logger]
+    [LOG_DISPLAY_DURATION, gameState, logger]
   );
+
+  // 🔹 IA joga automaticamente
+  useEffect(() => {
+    if (!gameState) return;
+
+    const chooser = gameState.players[gameState.choosingPlayer];
+
+    if (chooser.name === 'IA' && gameState.turnsCount > lastAITurn) {
+      const aiCard = gameState.players[1].hand[0];
+      const chosen = AIChooseAttr(aiCard);
+
+      const timer = setTimeout(() => {
+        handleTurn(chosen);
+        setLastAITurn(gameState.turnsCount);
+      }, LOG_DISPLAY_DURATION);
+
+      return () => clearTimeout(timer);
+    }
+  }, [gameState, lastAITurn, handleTurn, LOG_DISPLAY_DURATION]);
 
   return {
     turn: gameState?.turnsCount ?? 0,
@@ -101,11 +110,12 @@ export function useMatch() {
     playerHand: gameState?.players[0].hand ?? ([] as Card[]),
     aiHand: gameState?.players[1].hand ?? ([] as Card[]),
     logs,
+    isAICardRevealed,
 
     handleTurn,
     logger,
     start,
-
     gameState,
+    matchWinner,
   } as const;
 }
