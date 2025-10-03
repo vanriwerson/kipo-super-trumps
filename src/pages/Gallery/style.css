@@ -4,4 +4,5 @@
   gap: 8px;
   justify-content: center;
   padding: 8px;
+  max-width: 100%;
 }
