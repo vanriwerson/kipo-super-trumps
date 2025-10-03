@@ -18,7 +18,7 @@ export default function Game() {
   } = useMatch();
 
   const handleStartMatch = () => {
-    start(deck, ['Bruno', 'IA']);
+    start(deck, ['Jogador', 'IA']);
   };
 
   const handleChooseAttr = (attr: CardAttrKey) => {
@@ -27,9 +27,18 @@ export default function Game() {
 
   return (
     <div className="game-board">
-      <button className="start" onClick={handleStartMatch}>
-        {!gameState ? 'Iniciar Partida' : 'Nova Partida'}
-      </button>
+      <div className="game-board-header">
+        <button className="start" onClick={handleStartMatch}>
+          {!gameState ? 'Iniciar Partida' : 'Nova Partida'}
+        </button>
+
+        {gameState && matchWinner === null && (
+          <div className="game-status">
+            <p className="turn">{turn > 0 ? turn : ''}</p>
+            <p className="log">{logs[0]}</p>
+          </div>
+        )}
+      </div>
 
       {gameState && (
         <div className="in-game-cards">
@@ -57,13 +66,6 @@ export default function Game() {
               )}
             </>
           )}
-        </div>
-      )}
-
-      {matchWinner === null && (
-        <div className="game-status">
-          <p className="turn">{turn > 0 ? turn : ''}</p>
-          <p className="log">{logs[0]}</p>
         </div>
       )}
     </div>
