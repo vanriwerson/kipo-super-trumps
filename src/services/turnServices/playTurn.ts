@@ -29,6 +29,7 @@ export const playTurn = (
       currentTurnCards: [],
       stack: [],
       turnsCount: updatedState.turnsCount + 1,
+      choosingPlayer: superTrumpWinner,
     };
   }
 
