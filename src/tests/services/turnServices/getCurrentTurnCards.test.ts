@@ -4,7 +4,7 @@ import { deckMock, gameStateMock } from '../../mocks';
 
 describe('getCurrentTurnCards', () => {
   it('deve retornar a primeira carta da mão de cada jogador', () => {
-    const gameState = getCurrentTurnCards(gameStateMock);
-    expect(gameState.currentTurnCards).toEqual([deckMock[0], deckMock[3]]);
+    const currentTurnCards = getCurrentTurnCards(gameStateMock);
+    expect(currentTurnCards).toEqual([deckMock[0], deckMock[3]]);
   });
 });

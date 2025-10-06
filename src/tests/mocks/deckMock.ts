@@ -32,7 +32,7 @@ export const deckMock: Card[] = [
     id: '4D',
     name: 'Card 4',
     isTrumpCard: true,
-    strength: 10,
+    strength: 5,
     agility: 9,
     charisma: 1,
     intelligence: 7,
