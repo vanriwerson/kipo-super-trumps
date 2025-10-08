@@ -28,10 +28,6 @@ export default function Game() {
   return (
     <div className="game-board">
       <div className="game-board-header">
-        <button className="start" onClick={handleStartMatch}>
-          {!gameState ? 'Iniciar Partida' : 'Nova Partida'}
-        </button>
-
         {gameState != null && matchWinner === null && (
           <div className="game-status">
             <span className="turn">
@@ -76,6 +72,10 @@ export default function Game() {
           )}
         </div>
       )}
+
+      <button className="start" onClick={handleStartMatch}>
+        {!gameState ? 'Iniciar Partida' : 'Nova Partida'}
+      </button>
     </div>
   );
 }
