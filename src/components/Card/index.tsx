@@ -31,7 +31,11 @@ export default function Card({
         <div className="card-front">
           <div className="title-wrappper">
             <h4>{card.name}</h4>
-            <span className="id">{card.id}</span>
+            {card.isTrumpCard ? (
+              <span className="trump">TRUNFO</span>
+            ) : (
+              <span className="id">{card.id}</span>
+            )}
           </div>
           <img src={card.imgLink} alt={card.name} className="card-img" />
 
@@ -72,12 +76,6 @@ export default function Card({
               </>
             )}
           </div>
-
-          {card.isTrumpCard && (
-            <div className="trump">
-              <span>TRUNFO</span>
-            </div>
-          )}
         </div>
 
         {/* Verso */}

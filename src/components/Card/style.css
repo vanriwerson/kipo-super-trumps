@@ -6,10 +6,8 @@
 
 .card-container {
   cursor: pointer;
-  height: 440px;
   perspective: 1000px;
   position: relative;
-  width: 280px;
 }
 
 .card {
@@ -17,9 +15,13 @@
   border: 6px solid var(--main-bg);
   border-radius: var(--default-border-radius);
   height: 100%;
+  max-height: 440px;
+  max-width: 280px;
+  min-height: 360px;
+  min-width: 200px;
   position: relative;
   transform-style: preserve-3d;
-  transition: transform 0.8s ease;
+  transition: transform 0.3s ease;
 }
 
 .card.flipped {
@@ -32,10 +34,8 @@
   flex-direction: column;
   height: 100%;
   justify-content: space-between;
-  left: 0;
-  padding: 8px;
+  padding: clamp(4px, 6px, 8px);
   position: absolute;
-  top: 0;
   width: 100%;
 }
 
@@ -44,8 +44,9 @@
   backface-visibility: hidden;
   background: radial-gradient(circle,
       var(--main-bg) 0%,
-      var(--medium-bg) 75%,
-      var(--light-bg) 100%);
+      var(--medium-bg) 60%,
+      var(--light-bg) 80%,
+      var(--main-txt) 100%);
   color: var(--main-txt);
   display: flex;
   font-size: 1.4rem;
@@ -53,9 +54,7 @@
   transform: rotateY(180deg);
   height: 100%;
   justify-content: center;
-  left: 0;
   position: absolute;
-  top: 0;
   width: 100%;
 }
 
@@ -66,10 +65,10 @@
   border-radius: var(--default-border-radius);
   color: var(--main-bg);
   display: flex;
-  font-size: 1.5rem;
+  font-size: clamp(1rem, 2vw + 0.7rem, 1.5rem);
   font-weight: 700;
-  height: 68px;
   justify-content: space-between;
+  max-height: 68px;
   padding: 8px;
 }
 
@@ -79,16 +78,17 @@
   border-radius: 50%;
   color: var(--main-txt);
   display: flex;
-  height: var(--id-size);
+  height: auto;
   justify-content: center;
-  width: var(--id-size);
+  padding: 4px;
+  width: fit-content;
 }
 
 .card-img {
   border-radius: var(--default-border-radius);
-  height: var(--card-img-size);
-  margin: 0 auto;
-  width: var(--card-img-size);
+  height: auto;
+  margin: 4px auto;
+  max-width: clamp(70px, 30vw, var(--card-img-size));
 }
 
 .attributes-wrapper {
@@ -103,7 +103,7 @@
   border: none;
   color: var(--main-txt);
   cursor: pointer;
-  padding: 8px;
+  padding: clamp(4px, 6px, 8px);
   font-size: inherit;
   font-weight: 600;
 }
@@ -121,13 +121,10 @@
   color: var(--main-bg);
   display: flex;
   flex-wrap: wrap;
-  font-size: 0.8rem;
+  font-size: clamp(0.6rem, 0.7rem, 0.8rem);
   font-weight: bold;
-  height: var(--trump-size);
+  height: clamp(36px, 48px, 60px);
   justify-content: center;
-  position: absolute;
-  right: 12px;
-  top: 12px;
   transform: rotate(45deg);
-  width: var(--trump-size);
+  width: fit-content;
 }

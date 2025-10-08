@@ -34,8 +34,10 @@ export default function Game() {
 
         {gameState != null && matchWinner === null && (
           <div className="game-status">
-            <p className="turn">{turn > 0 ? turn : ''}</p>
-            <p className="log">{logs[0]}</p>
+            <span className="turn">
+              {turn > 0 ? (turn < 10 ? `0${turn}` : turn) : ''}
+            </span>
+            <span className="log">{logs[0]}</span>
           </div>
         )}
       </div>

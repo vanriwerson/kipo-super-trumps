@@ -1,5 +1,5 @@
 .hand-display {
-  background-color: var(--main-txt);
+  background-color: var(--light-bg);
   border-radius: 8px;
   height: fit-content;
   justify-content: center;
@@ -30,7 +30,6 @@
 }
 
 .hand-label {
-  background-color: var(--main-txt);
   border-radius: 8px;
   color: var(--main-bg);
   font-size: 1.2rem;
