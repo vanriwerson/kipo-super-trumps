@@ -1,6 +1,6 @@
 import { useMatch } from '../../hooks';
 import deck from '../../assets/deck';
-import { Card } from '../../components';
+import { Card, HandDisplay } from '../../components';
 import './style.css';
 import type { CardAttrKey } from '../../interfaces';
 
@@ -32,7 +32,7 @@ export default function Game() {
           {!gameState ? 'Iniciar Partida' : 'Nova Partida'}
         </button>
 
-        {gameState && matchWinner === null && (
+        {gameState != null && matchWinner === null && (
           <div className="game-status">
             <p className="turn">{turn > 0 ? turn : ''}</p>
             <p className="log">{logs[0]}</p>
@@ -51,18 +51,24 @@ export default function Game() {
           ) : (
             <>
               {playerHand[0] && (
-                <Card
-                  card={playerHand[0]}
-                  isInGameMode={true}
-                  onChooseAttr={handleChooseAttr}
-                />
+                <div className="hand-wrapper">
+                  <Card
+                    card={playerHand[0]}
+                    isInGameMode={true}
+                    onChooseAttr={handleChooseAttr}
+                  />
+                  <HandDisplay count={playerHand.length} label="Jogador" />
+                </div>
               )}
               {aiHand[0] && (
-                <Card
-                  card={aiHand[0]}
-                  flipped={!isAICardRevealed}
-                  isInGameMode={true}
-                />
+                <div className="hand-wrapper">
+                  <Card
+                    card={aiHand[0]}
+                    flipped={!isAICardRevealed}
+                    isInGameMode={true}
+                  />
+                  <HandDisplay count={aiHand.length} label="IA" />
+                </div>
               )}
             </>
           )}

@@ -5,7 +5,7 @@ import App from '../App';
 const routes: RouteObject[] = [
   {
     path: '/',
-    element: <App />, // App é o layout que contém <MainMenu /> e <Footer />
+    element: <App />,
     children: [
       {
         index: true,
