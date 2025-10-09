@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import type { Card as CardType } from '../../interfaces';
 import type { AttributeKey } from '../../services/turnServices/chooseAttr';
 import './style.css';
@@ -16,17 +15,9 @@ export default function Card({
   flipped: flippedProp = false,
   onChooseAttr,
 }: CardProps) {
-  const [galleryFlipped, setGalleryFlipped] = useState(false);
-  const isFlipped = isInGameMode ? flippedProp : galleryFlipped;
-
   return (
-    <div
-      className="card-container"
-      onClick={
-        isInGameMode ? undefined : () => setGalleryFlipped((prev) => !prev)
-      }
-    >
-      <div className={`card ${isFlipped ? 'flipped' : ''}`}>
+    <div className="card-container">
+      <div className={`card ${flippedProp ? 'flipped' : ''}`}>
         {/* Frente */}
         <div className="card-front">
           <div className="title-wrappper">
@@ -40,48 +31,43 @@ export default function Card({
           <img src={card.imgLink} alt={card.name} className="card-img" />
 
           <div className="attributes-wrapper">
-            {isInGameMode ? (
-              <>
-                <button
-                  className="attribute"
-                  onClick={() => onChooseAttr?.('strength')}
-                >
-                  Força: {card.strength}
-                </button>
-                <button
-                  className="attribute"
-                  onClick={() => onChooseAttr?.('agility')}
-                >
-                  Agilidade: {card.agility}
-                </button>
-                <button
-                  className="attribute"
-                  onClick={() => onChooseAttr?.('intelligence')}
-                >
-                  Inteligência: {card.intelligence}
-                </button>
-                <button
-                  className="attribute"
-                  onClick={() => onChooseAttr?.('charisma')}
-                >
-                  Carisma: {card.charisma}
-                </button>
-              </>
-            ) : (
-              <>
-                <p className="attribute">Força: {card.strength}</p>
-                <p className="attribute">Agilidade: {card.agility}</p>
-                <p className="attribute">Inteligência: {card.intelligence}</p>
-                <p className="attribute">Carisma: {card.charisma}</p>
-              </>
-            )}
+            <button
+              className="attribute"
+              onClick={() => onChooseAttr?.('strength')}
+              disabled={!isInGameMode}
+            >
+              <span className="label">Força</span>
+              <span className="value">{card.strength}</span>
+            </button>
+            <button
+              className="attribute"
+              onClick={() => onChooseAttr?.('agility')}
+              disabled={!isInGameMode}
+            >
+              <span className="label">Agilidade</span>
+              <span className="value">{card.agility}</span>
+            </button>
+            <button
+              className="attribute"
+              onClick={() => onChooseAttr?.('intelligence')}
+              disabled={!isInGameMode}
+            >
+              <span className="label">Inteligência</span>
+              <span className="value">{card.intelligence}</span>
+            </button>
+            <button
+              className="attribute"
+              onClick={() => onChooseAttr?.('charisma')}
+              disabled={!isInGameMode}
+            >
+              <span className="label">Carisma</span>
+              <span className="value">{card.charisma}</span>
+            </button>
           </div>
         </div>
 
         {/* Verso */}
-        <div className="card-back">
-          <span></span>
-        </div>
+        <div className="card-back"></div>
       </div>
     </div>
   );
