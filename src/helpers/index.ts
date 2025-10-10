@@ -1,0 +1,1 @@
+export { AttrDictionary } from './AttrDictionary';

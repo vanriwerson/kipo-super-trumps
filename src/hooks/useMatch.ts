@@ -8,6 +8,7 @@ import {
   checkMatchWinner,
 } from '../services';
 import { useLog } from './useLog';
+import { AttrDictionary } from '../helpers';
 
 export function useMatch() {
   const [gameState, setGameState] = useState<GameState | null>(null);
@@ -30,7 +31,7 @@ export function useMatch() {
         logger(`${chooser.name} escolhendo atributo`);
       }, LOG_DISPLAY_DURATION);
 
-      setMatchWinner(null); // limpa vencedor anterior
+      setMatchWinner(null);
       resetLogs();
       setGameState(initialState);
       setLastAITurn(-1);
@@ -44,7 +45,7 @@ export function useMatch() {
       if (!gameState) return;
 
       const chooser = gameState.players[gameState.choosingPlayer];
-      logger(`${chooser.name} escolheu ${chosen}`);
+      logger(`${chooser.name} escolheu ${AttrDictionary(chosen)}`);
 
       setIsAICardRevealed(true);
       await new Promise((resolve) => setTimeout(resolve, LOG_DISPLAY_DURATION));
@@ -73,7 +74,7 @@ export function useMatch() {
       const winner = checkMatchWinner(solvedTurn);
       if (winner != null) {
         setMatchWinner(winner.name);
-        return; // encerra aqui
+        return;
       }
 
       // inicia próximo turno
