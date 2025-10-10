@@ -6,7 +6,7 @@ export default function Gallery() {
   return (
     <div className="cards-wrapper">
       {deck.map((card) => (
-        <Card key={card.id} card={card} isInGameMode={false} />
+        <Card key={card.id} card={card} galleryMode />
       ))}
     </div>
   );
