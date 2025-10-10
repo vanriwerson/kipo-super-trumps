@@ -107,9 +107,9 @@ const deck: Card[] = [
   {
     id: '8A',
     name: 'Dave (Forte)',
-    strength: 50,
+    strength: 55,
     agility: 40,
-    intelligence: 30,
+    intelligence: 25,
     charisma: 30,
     imgLink: strongDave,
     isTrumpCard: false,

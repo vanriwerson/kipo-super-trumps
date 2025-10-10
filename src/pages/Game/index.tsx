@@ -1,8 +1,9 @@
 import { useMatch } from '../../hooks';
 import deck from '../../assets/deck';
 import { Card, HandDisplay } from '../../components';
-import './style.css';
 import type { CardAttrKey } from '../../interfaces';
+import './style.css';
+import { useState } from 'react';
 
 export default function Game() {
   const {
@@ -17,8 +18,10 @@ export default function Game() {
     matchWinner,
   } = useMatch();
 
+  const [playerName, setPlayerName] = useState('');
+
   const handleStartMatch = () => {
-    start(deck, ['Jogador', 'IA']);
+    start(deck, [playerName, 'IA']);
   };
 
   const handleChooseAttr = (attr: CardAttrKey) => {
@@ -30,10 +33,12 @@ export default function Game() {
       <div className="game-board-header">
         {gameState != null && matchWinner === null && (
           <div className="game-status">
-            <span className="turn">
-              {turn > 0 ? (turn < 10 ? `0${turn}` : turn) : ''}
-            </span>
-            <span className="log">{logs[0]}</span>
+            {turn > 0 && (
+              <>
+                <span className="turn">{turn < 10 ? `0${turn}` : turn}</span>
+                <span className="log">{logs[0]}</span>
+              </>
+            )}
           </div>
         )}
       </div>
@@ -73,9 +78,31 @@ export default function Game() {
         </div>
       )}
 
-      <button className="start" onClick={handleStartMatch}>
-        {!gameState ? 'Iniciar Partida' : 'Nova Partida'}
-      </button>
+      <div
+        className={`game-board-footer ${
+          gameState != null && matchWinner === null ? 'hidden' : ''
+        }`}
+      >
+        <input
+          className="player-name"
+          type="text"
+          name="player-name"
+          id="player-name"
+          placeholder="Digite seu nome..."
+          onChange={(e) => setPlayerName(e.target.value)}
+          value={playerName}
+        />
+
+        <button
+          className={`start ${
+            gameState != null && matchWinner === null ? 'hidden' : ''
+          }`}
+          disabled={playerName.length < 3}
+          onClick={handleStartMatch}
+        >
+          {!gameState ? 'Iniciar Partida' : 'Nova Partida'}
+        </button>
+      </div>
     </div>
   );
 }
