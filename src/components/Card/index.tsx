@@ -4,14 +4,14 @@ import './style.css';
 
 interface CardProps {
   card: CardType;
-  isInGameMode: boolean;
+  galleryMode: boolean;
   flipped?: boolean;
   onChooseAttr?: (attr: AttributeKey) => void;
 }
 
 export default function Card({
   card,
-  isInGameMode,
+  galleryMode = true,
   flipped: flippedProp = false,
   onChooseAttr,
 }: CardProps) {
@@ -34,7 +34,7 @@ export default function Card({
             <button
               className="attribute"
               onClick={() => onChooseAttr?.('strength')}
-              disabled={!isInGameMode}
+              disabled={galleryMode}
             >
               <span className="label">Força</span>
               <span className="value">{card.strength}</span>
@@ -42,7 +42,7 @@ export default function Card({
             <button
               className="attribute"
               onClick={() => onChooseAttr?.('agility')}
-              disabled={!isInGameMode}
+              disabled={galleryMode}
             >
               <span className="label">Agilidade</span>
               <span className="value">{card.agility}</span>
@@ -50,7 +50,7 @@ export default function Card({
             <button
               className="attribute"
               onClick={() => onChooseAttr?.('intelligence')}
-              disabled={!isInGameMode}
+              disabled={galleryMode}
             >
               <span className="label">Inteligência</span>
               <span className="value">{card.intelligence}</span>
@@ -58,7 +58,7 @@ export default function Card({
             <button
               className="attribute"
               onClick={() => onChooseAttr?.('charisma')}
-              disabled={!isInGameMode}
+              disabled={galleryMode}
             >
               <span className="label">Carisma</span>
               <span className="value">{card.charisma}</span>

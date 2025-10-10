@@ -52,7 +52,7 @@ export default function Game() {
                 <div className="hand-wrapper">
                   <Card
                     card={playerHand[0]}
-                    isInGameMode={true}
+                    galleryMode={false}
                     onChooseAttr={handleChooseAttr}
                   />
                   <HandDisplay count={playerHand.length} label="Jogador" />
@@ -63,7 +63,7 @@ export default function Game() {
                   <Card
                     card={aiHand[0]}
                     flipped={!isAICardRevealed}
-                    isInGameMode={true}
+                    galleryMode={false}
                   />
                   <HandDisplay count={aiHand.length} label="IA" />
                 </div>
