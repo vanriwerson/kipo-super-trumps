@@ -60,7 +60,7 @@ export default function Game() {
                     galleryMode={false}
                     onChooseAttr={handleChooseAttr}
                   />
-                  <HandDisplay count={playerHand.length} label="Jogador" />
+                  <HandDisplay count={playerHand.length} label={playerName} />
                 </div>
               )}
               {aiHand[0] && (
@@ -88,6 +88,7 @@ export default function Game() {
           type="text"
           name="player-name"
           id="player-name"
+          maxLength={8}
           placeholder="Digite seu nome..."
           onChange={(e) => setPlayerName(e.target.value)}
           value={playerName}
