@@ -37,7 +37,7 @@ export function useMatch() {
       setLastAITurn(-1);
       setIsAICardRevealed(false);
     },
-    [LOG_DISPLAY_DURATION, logger]
+    [LOG_DISPLAY_DURATION, logger, resetLogs]
   );
 
   const handleTurn = useCallback(
