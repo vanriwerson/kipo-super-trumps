@@ -28,9 +28,9 @@ export default function MainMenu() {
         <NavLink to="/game" onClick={() => setOpen(false)}>
           Jogo
         </NavLink>
-        <NavLink to="/settings" onClick={() => setOpen(false)}>
+        {/* <NavLink to="/settings" onClick={() => setOpen(false)}>
           Configurações
-        </NavLink>
+        </NavLink> */}
       </div>
     </nav>
   );
