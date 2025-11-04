@@ -1,0 +1,15 @@
+.presentation {
+  background-color: var(--main-bg);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: justify;
+}
+
+.nav {
+  background-color: var(--main-bg);
+  border-radius: 12px;
+  color: var(--main-txt);
+  text-decoration: none;
+  padding: 16px 40px;
+  transition: background-color 0.2s;
+}
