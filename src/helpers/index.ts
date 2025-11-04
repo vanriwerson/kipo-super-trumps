@@ -1,1 +1,2 @@
-export { AttrDictionary } from './AttrDictionary';
+export { attrDictionary } from './attrDictionary';
+export { gameRulesMap } from './gameRulesMap';

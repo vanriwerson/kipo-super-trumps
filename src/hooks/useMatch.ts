@@ -8,7 +8,7 @@ import {
   checkMatchWinner,
 } from '../services';
 import { useLog } from './useLog';
-import { AttrDictionary } from '../helpers';
+import { attrDictionary } from '../helpers';
 
 export function useMatch() {
   const [gameState, setGameState] = useState<GameState | null>(null);
@@ -45,7 +45,7 @@ export function useMatch() {
       if (!gameState) return;
 
       const chooser = gameState.players[gameState.choosingPlayer];
-      logger(`${chooser.name} escolheu ${AttrDictionary(chosen)}`);
+      logger(`${chooser.name} escolheu ${attrDictionary(chosen)}`);
 
       setIsAICardRevealed(true);
       await new Promise((resolve) => setTimeout(resolve, LOG_DISPLAY_DURATION));

@@ -1,6 +1,6 @@
 import type { CardAttrKey } from '../interfaces';
 
-export function AttrDictionary(attr: CardAttrKey) {
+export const attrDictionary = (attr: CardAttrKey) => {
   const attrs = {
     strength: 'Força',
     agility: 'Agilidade',
@@ -9,4 +9,4 @@ export function AttrDictionary(attr: CardAttrKey) {
   };
 
   return attrs[attr];
-}
+};
