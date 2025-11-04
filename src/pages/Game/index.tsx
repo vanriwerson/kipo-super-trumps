@@ -29,7 +29,7 @@ export default function Game() {
   };
 
   return (
-    <div className="game-board">
+    <div className="page-container">
       <div className="game-board-header">
         {gameState != null && matchWinner === null && (
           <div className="game-status">
